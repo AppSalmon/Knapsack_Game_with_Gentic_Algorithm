@@ -97,6 +97,7 @@ ORANGE = (255,125,25)
 GRAPE = (100,25,125)
 GRASS = (55,155,65)
 list_position_item = [(100, 100), (100, 250), (100, 400), (100, 550), (100, 700), (250, 100), (250, 250), (250, 400), (250, 550), (250, 700)]
+wellcome = pygame.image.load('welcome.png').convert_alpha()
 
 running = True
 clock = pygame.time.Clock() # Tạo FPS
@@ -147,9 +148,30 @@ chart_image = draw_graph()
 # ==============================================
 
 
+# =========== WELCOME Screen =================
+def welcomeScreen():
+	"""
+	Shows welcome images on the screen
+	"""
+	while True:
+		for event in pygame.event.get():
+			
+			if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE): # Click chuột quit hoặc bấm ESC
+				pygame.quit()
+				sys.exit()
+
+			
+			elif event.type == pygame.KEYDOWN and (event.key == pygame.K_SPACE or event.key == pygame.K_UP): # Bấm space hoặc up thì vô game
+				return
+			else:
+				# Không bấm thì vẽ hình
+				
+				screen.blit(wellcome, (150, 200))
+				pygame.display.update()
 
 
 # Main loop
+welcomeScreen()
 while running:
 	clock.tick(60)
 	screen.fill(BACKGROUND)
@@ -287,7 +309,7 @@ while running:
 					elif bot_total_value > player_total_value:
 						bot_win += 1
 
-					print(player_win, bot_win)
+					# print(player_win, bot_win)
 
 			elif button_again.collidepoint(mouse_x, mouse_y):
 				reset_player()
