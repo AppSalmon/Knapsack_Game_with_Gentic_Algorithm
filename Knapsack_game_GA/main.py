@@ -6,6 +6,7 @@ import pandas as pd
 from random import randint
 import sys
 from GA import *
+import time
 
 
 def create_text(x, color, size): # Tạo chữ
@@ -55,7 +56,12 @@ def reset_problem():
 	initial_population = initial_population.astype(int)
 
 	# Solve
+	start_time = time.time()
 	parameters, fitness_history = optimize_gentic_algorithm(weight, value, initial_population, pop_size, num_generations, knapsack_threshold)
+	end_time = time.time()
+	elapsed_time = end_time - start_time
+	print(f"Thời gian thực hiện GA: {elapsed_time} giây")
+
 	print('The optimized parameters for the given inputs are: \n{}'.format(parameters))
 
 	# In kết quả
@@ -154,6 +160,7 @@ def welcomeScreen():
 	Shows welcome images on the screen
 	"""
 	while True:
+		screen.blit(create_text("Click Space or Up to play game!", WHITE, 50), (200, 600))
 		for event in pygame.event.get():
 			
 			if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE): # Click chuột quit hoặc bấm ESC
@@ -343,7 +350,8 @@ while running:
 				if index in player_list_item:
 					player_list_item.remove(index)
 				else:
-					player_list_item.append(index)
+					if len(player_list_item) < 3:
+						player_list_item.append(index)
 
 				player_total_weight = 0
 				player_total_value = 0
